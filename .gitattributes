@@ -1,0 +1,8 @@
+# Files excluded from release archives / Composer dist packages
+# (`.gitattributes` `export-ignore` — GitHub release archives and Composer
+#  dist downloads honor these rules)
+/docs/            export-ignore
+/tests/           export-ignore
+/.github/         export-ignore
+/.gitattributes   export-ignore
+/.gitignore       export-ignore
