@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace aodihis\craftlangfuse\Dev\Fixtures\Violations\Model;
+namespace aodihis\craftlangfuse\Dev\Fixtures\Violations\Models;
 
 /**
  * Fixture: EXPECTED violation of `craft/readonly-value-objects`

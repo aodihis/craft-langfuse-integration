@@ -46,7 +46,7 @@ author's to fix. `.githooks/pre-commit` runs it on every commit;
    | `craft/forbidden-imports` | No `CraftAiObserver\Tree\`, `CraftAiObserver\Dev\`, `Laravel\Ai\`, `LangSmith\`, `OpenTelemetry\`, `Psr\Http\`, `GuzzleHttp\`, `Symfony\Component\HttpClient\` references. Only the normalized record crosses into the adapter. |
    | `craft/no-facade-log` | No `Log` facade, import, or call. Inject `Psr\Log\LoggerInterface`. |
    | `craft/no-single-line-control-structure` | No `if ($x) { return; }`, one-line loop bodies, one-line `else`/`elseif`. |
-   | `craft/readonly-value-objects` | Classes under `src/Model/` are `readonly`. |
+   | `craft/readonly-value-objects` | Classes under `src/models/` are `readonly`. |
 
    Built-ins raised to `error`: `no-nested-ternary`, `no-shorthand-ternary`
    (`$a ?: $b`), `block-statement` (unbraced bodies).

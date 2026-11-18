@@ -13,11 +13,13 @@ use Mago\Sdk\Reporting\Level;
 use Mago\Sdk\Syntax\Node;
 use Mago\Sdk\Syntax\NodeKind;
 
+use function ltrim;
 use function str_contains;
 use function str_replace;
+use function str_starts_with;
 
 /**
- * Classes under `src/Model/` are adapter-local value objects (mapped payloads,
+ * Classes under `src/models/` are adapter-local value objects (mapped payloads,
  * settings snapshots) and must be `readonly`. See docs/rules/toolchain.md.
  * @internal
  */
@@ -28,7 +30,7 @@ final class ReadonlyValueObjectsRule implements Rule
         return new RuleDefinition(
             code: 'craft/readonly-value-objects',
             name: 'Model classes must be readonly',
-            description: 'Requires `readonly` on value-object classes declared under src/Model/.',
+            description: 'Requires `readonly` on value-object classes declared under src/models/.',
             defaultLevel: Level::Error,
             defaultEnabled: true,
             targets: [NodeKind::Class_]
@@ -50,16 +52,19 @@ final class ReadonlyValueObjectsRule implements Rule
             $context->node->span,
             annotationMessage: 'Missing `readonly` modifier'
         )->withHelp(
-            'Anything under src/Model/ is an immutable value object by definition. Declare the class '
+            'Anything under src/models/ is an immutable value object by definition. Declare the class '
             . '`readonly` and keep it free of behaviour. See docs/rules/toolchain.md.'
         ));
     }
 
     private function isModelFile(string $path): bool
     {
-        $normalized = str_replace(search: '\\', replace: '/', subject: $path);
+        $normalized = ltrim(
+            string: strtolower(str_replace(search: '\\', replace: '/', subject: $path)),
+            characters: '/'
+        );
 
-        return str_contains($normalized, '/src/Model/');
+        return str_starts_with($normalized, 'src/models/') || str_contains($normalized, '/src/models/');
     }
 
     private function hasReadonlyModifier(LintContext $context): bool

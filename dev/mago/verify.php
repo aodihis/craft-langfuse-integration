@@ -16,7 +16,7 @@ const EXPECTED = [
     'violations/src/TernarySoup.php' => ['no-nested-ternary' => 1],
     'violations/src/UsesAliasedFacadeLog.php' => ['craft/no-facade-log' => 1],
     'violations/src/UsesFacadeLog.php' => ['craft/no-facade-log' => 2],
-    'violations/src/Model/MutableTrace.php' => ['craft/readonly-value-objects' => 1]
+    'violations/src/models/MutableTrace.php' => ['craft/readonly-value-objects' => 1]
 ];
 
 /**

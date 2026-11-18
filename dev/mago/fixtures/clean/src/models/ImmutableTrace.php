@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace aodihis\craftlangfuse\Dev\Fixtures\Clean\Model;
+namespace aodihis\craftlangfuse\Dev\Fixtures\Clean\Models;
 
 use DateTimeImmutable;
 
 /**
- * Fixture: EXPECTED to be clean — a readonly value object under src/Model/.
+ * Fixture: EXPECTED to be clean — a readonly value object under src/models/.
  */
 final readonly class ImmutableTrace
 {

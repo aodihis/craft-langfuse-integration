@@ -54,7 +54,7 @@ constructor-threshold = 12
 #   craft/forbidden-imports                 no agent events / library internals
 #   craft/no-facade-log                     no Log facade
 #   craft/no-single-line-control-structure  no `if ($x) { ... }` one-liners
-#   craft/readonly-value-objects            src/Model/ classes are readonly
+#   craft/readonly-value-objects            src/models/ classes are readonly
 [extension-hosts.craft]
 command = ["php", ".mago/craft-worker.php"]
 
