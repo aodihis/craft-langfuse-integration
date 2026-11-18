@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Pre-commit gate — formatting, linting, static analysis, rule fixtures, tests.
+#
+# Installed by `composer install` / `composer update`, which point
+# core.hooksPath at this directory (see the hooks:install script).
+#
+# Bypass with `git commit --no-verify` only when you know why the check fails.
+
+set -e
+
+cd "$(git rev-parse --show-toplevel)"
+
+if ! command -v composer >/dev/null 2>&1; then
+    echo "pre-commit: composer is not on PATH, skipping checks." >&2
+    exit 0
+fi
+
+echo "pre-commit: composer check (lint, format, analyze, rule fixtures, tests)"
+composer check

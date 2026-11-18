@@ -1,0 +1,21 @@
+#:schema https://mago.carthage.software/1.60.2/schema.json
+
+# Standalone config for the custom-rule fixtures, driven by
+# `dev/mago/verify.php` (`composer verify-rules`).
+#
+# It deliberately does not `extends` the root mago.toml: extension configs are
+# merged by appending, so the root `excludes` (which keeps the fixtures out of
+# the normal run) would still apply here. Duplicating the three settings that
+# matter for the rules is the price for a config the fixtures can be linted
+# with.
+
+version = "1"
+php-version = "8.4"
+
+[source]
+paths = ["dev/mago/fixtures/violations/src", "dev/mago/fixtures/clean/src"]
+
+# The rules under test live in the root extension. Worker paths are resolved
+# relative to *this* file's directory, hence the three `..` segments.
+[extension-hosts.craft]
+command = ["php", "../../../.mago/craft-worker.php"]

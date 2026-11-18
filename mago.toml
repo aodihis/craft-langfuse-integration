@@ -1,0 +1,74 @@
+#:schema https://mago.carthage.software/1.60.2/schema.json
+
+# Mago configuration for craft-langfuse-integration.
+# Mirrors craft-ai-observer's toolchain (same gate, same custom rules).
+# Docs: https://mago.carthage.software/latest/en/guide/configuration/
+
+version = "1"
+# The plugin's floor (docs/rules/backend.md); the local runtime is 8.5.
+php-version = "8.4"
+
+[source]
+# `dev/` holds the custom Mago rules and their fixtures; the fixtures are
+# linted on purpose by `dev/mago/verify.php`, never by the normal run.
+paths = ["src", "tests", "dev"]
+excludes = ["dev/mago/fixtures/**"]
+# Scanned for symbol resolution only (never linted/analyzed): the extension
+# SDK the custom rules implement. Add `vendor/craftcms`, `vendor/langfuse`,
+# `vendor/laravel` here once the plugin's runtime dependencies are installed
+# (see composer.json: the runtime `require` block lands with the scaffold).
+includes = [
+    "vendor/carthage-software/mago/composer/src",
+]
+
+[source.glob]
+# `*` matches one directory level, `**` is recursive (gitignore-style).
+literal-separator = true
+
+[linter]
+# Enables PHPUnit-aware linter rules for the test suite.
+integrations = ["phpunit"]
+
+# Built-in rules raised to errors where they express a project rule.
+#
+# no-nested-ternary      — no `$a ? ($b ? 1 : 2) : 3`
+# block-statement        — no unbraced `if (...)` / loop bodies
+# no-shorthand-ternary   — no `$a ?: $b`
+[linter.rules.no-nested-ternary]
+level = "error"
+
+[linter.rules.block-statement]
+level = "error"
+
+[linter.rules.no-shorthand-ternary]
+level = "error"
+
+[linter.rules.excessive-parameter-list]
+# Mapped payloads are data carriers; their constructors mirror the Langfuse
+# object one-to-one. Behaviour methods keep the default limit of five.
+constructor-threshold = 12
+
+# Custom project rules (see dev/mago/src/Linter/Rules/). The host spawns
+# `.mago/craft-worker.php`, which registers this plugin's rules:
+#   craft/comment-placement                 comments only above declarations
+#   craft/forbidden-imports                 no agent events / library internals
+#   craft/no-facade-log                     no Log facade
+#   craft/no-single-line-control-structure  no `if ($x) { ... }` one-liners
+#   craft/readonly-value-objects            src/Model/ classes are readonly
+[extension-hosts.craft]
+command = ["php", ".mago/craft-worker.php"]
+
+[analyzer]
+# The mapping is typed data in, typed data out — these checks keep type hints
+# honest from day one.
+check-missing-type-hints = true
+check-property-initialization = true
+find-unused-parameters = true
+check-use-statements = true
+check-name-casing = true
+
+[formatter]
+# Rules docs: "PSR-12, strict_types, typed".
+preset = "psr-12"
+# PSR-12 mandates LF line endings (`F.1` line endings).
+end-of-line = "lf"

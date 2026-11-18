@@ -1,0 +1,71 @@
+{
+    "name": "aodihis/craft-langfuse-integration",
+    "description": "Craft CMS 6 plugin that forwards AI agent telemetry from craft-ai-observer to Langfuse.",
+    "type": "craft-plugin",
+    "license": "MIT",
+    "keywords": [
+        "craftcms",
+        "craft-plugin",
+        "langfuse",
+        "observability",
+        "telemetry",
+        "ai"
+    ],
+    "support": {
+        "issues": "https://github.com/aodihis/craft-langfuse-integration/issues?state=open",
+        "source": "https://github.com/aodihis/craft-langfuse-integration"
+    },
+    "require": {
+        "php": "^8.4"
+    },
+    "require-dev": {
+        "carthage-software/mago": "^1.60.2",
+        "phpunit/phpunit": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "aodihis\\craftlangfuse\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "aodihis\\craftlangfuse\\Dev\\Mago\\": "dev/mago/src/",
+            "aodihis\\craftlangfuse\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "handle": "langfuse",
+        "name": "Langfuse",
+        "developer": "aodihis",
+        "documentationUrl": "https://github.com/aodihis/craft-langfuse-integration"
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "8.4.0"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@lint",
+            "@format:check",
+            "@analyze",
+            "@verify-rules",
+            "@test"
+        ],
+        "lint": "mago lint",
+        "lint:fix": "mago lint --fix",
+        "format": "mago format",
+        "format:check": "mago format --check",
+        "analyze": "mago analyze",
+        "verify-rules": "php dev/mago/verify.php",
+        "test": "phpunit",
+        "hooks:install": "git config core.hooksPath .githooks",
+        "post-install-cmd": [
+            "@hooks:install"
+        ],
+        "post-update-cmd": [
+            "@hooks:install"
+        ]
+    }
+}

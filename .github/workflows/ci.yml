@@ -1,0 +1,39 @@
+name: CI
+
+# Manual only: nothing runs on push or pull request.
+#
+# Commits are gated locally by `.githooks/pre-commit` (composer check), so CI is
+# the "verify the declared PHP floor too" step, run on purpose:
+#
+#   gh workflow run CI --ref main      # or: Actions -> CI -> Run workflow
+#
+on:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    name: composer check (PHP 8.4)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Validate composer.json
+        run: composer validate --no-check-publish
+
+      - name: Lint, format check, analyze, rule fixtures, tests
+        run: composer check
+        env:
+          # Mago's Composer wrapper downloads the prebuilt binary on first
+          # run; the token avoids GitHub's anonymous rate limit in CI.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

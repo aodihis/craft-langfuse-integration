@@ -3,3 +3,10 @@
 /.vscode/
 .DS_Store
 *.log
+
+# PHPUnit
+/.phpunit.cache/
+
+# Mago generated baselines (only created on request, which is never)
+/linter-baseline.toml
+/analyzer-baseline.toml

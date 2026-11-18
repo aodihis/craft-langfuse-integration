@@ -6,3 +6,22 @@
 /.github/         export-ignore
 /.gitattributes   export-ignore
 /.gitignore       export-ignore
+/AGENTS.md        export-ignore
+/Makefile         export-ignore
+/bin/             export-ignore
+/dev/             export-ignore
+/.mago/           export-ignore
+/.githooks/       export-ignore
+/mago.toml        export-ignore
+/phpunit.xml      export-ignore
+/composer.lock    export-ignore
+/.editorconfig    export-ignore
+
+# PSR-12 requires LF line endings (F.1) — normalize on check-in
+*.php             text eol=lf
+*.md              text eol=lf
+*.toml            text eol=lf
+*.json            text eol=lf
+*.yml             text eol=lf
+*.yaml            text eol=lf
+/.githooks/*      text eol=lf
